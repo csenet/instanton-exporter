@@ -165,6 +165,10 @@ jobs:
       security-events: write
 
     steps:
+    - name: Prepare environment
+      run: |
+        echo "REGISTRY_IMAGE=`echo ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} | tr '[:upper:]' '[:lower:]'`" >> $GITHUB_ENV
+
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
