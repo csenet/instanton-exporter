@@ -151,10 +151,9 @@ jobs:
 
     - name: Create and push manifest
       run: |
-        docker buildx imagetools create \
-          --tag ${{ steps.meta.outputs.tags }} \
-          ${{ needs.build-amd64.outputs.image-digest }} \
-          ${{ needs.build-arm64.outputs.image-digest }}
+        docker buildx imagetools create $(echo "${{ steps.meta.outputs.tags }}" | tr '\n' ' ' | sed 's/^/--tag /g' | sed 's/ --tag / --tag /g') \
+          ${{ env.REGISTRY_IMAGE }}@${{ needs.build-amd64.outputs.image-digest }} \
+          ${{ env.REGISTRY_IMAGE }}@${{ needs.build-arm64.outputs.image-digest }}
 
   security-scan:
     if: github.event_name != 'pull_request'
