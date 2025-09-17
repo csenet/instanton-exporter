@@ -127,7 +127,7 @@ docker pull ghcr.io/csenet/instanton-exporter:latest
 ```bash
 docker run -d \
   --name instanton-exporter \
-  -p 9101:9101 \
+  -p 9100:9100 \
   -e ARUBA_USERNAME=your-email@example.com \
   -e ARUBA_PASSWORD=your-password \
   ghcr.io/csenet/instanton-exporter:latest
@@ -141,7 +141,7 @@ services:
   instanton-exporter:
     image: ghcr.io/csenet/instanton-exporter:latest
     ports:
-      - "9101:9101"
+      - "9100:9100"
     environment:
       - ARUBA_USERNAME=your-email@example.com
       - ARUBA_PASSWORD=your-password
@@ -181,8 +181,8 @@ export ARUBA_PASSWORD="your-secure-password"
    ```bash
    ./instanton-exporter
    ```
-3. エクスポーターはデフォルトでポート`9101`で起動
-4. メトリクスは`http://localhost:9101/metrics`で利用可能
+3. エクスポーターはデフォルトでポート`9100`で起動
+4. メトリクスは`http://localhost:9100/metrics`で利用可能
 
 ### サンプル出力
 
@@ -208,7 +208,7 @@ aruba_instant_on_wireless_clients_total{site_id="...",site_name="Main Office"} 1
 scrape_configs:
   - job_name: 'aruba-instant-on'
     static_configs:
-      - targets: ['localhost:9101']
+      - targets: ['localhost:9100']
     scrape_interval: 30s
     scrape_timeout: 10s
 ```
@@ -282,7 +282,7 @@ go test ./...
 ### ネットワーク問題
 
 - `portal.instant-on.hpe.com`への発信HTTPS アクセスを確認
-- エクスポーターのリスニングポート（9101）のファイアウォールルールをチェック
+- エクスポーターのリスニングポート（9100）のファイアウォールルールをチェック
 
 ### デバッグ
 

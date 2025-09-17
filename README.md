@@ -127,7 +127,7 @@ Run with environment variables:
 ```bash
 docker run -d \
   --name instanton-exporter \
-  -p 9101:9101 \
+  -p 9100:9100 \
   -e ARUBA_USERNAME=your-email@example.com \
   -e ARUBA_PASSWORD=your-password \
   ghcr.io/csenet/instanton-exporter:latest
@@ -141,7 +141,7 @@ services:
   instanton-exporter:
     image: ghcr.io/csenet/instanton-exporter:latest
     ports:
-      - "9101:9101"
+      - "9100:9100"
     environment:
       - ARUBA_USERNAME=your-email@example.com
       - ARUBA_PASSWORD=your-password
@@ -181,8 +181,8 @@ export ARUBA_PASSWORD="your-secure-password"
    ```bash
    ./instanton-exporter
    ```
-3. The exporter will start on port `9101` by default
-4. Metrics are available at `http://localhost:9101/metrics`
+3. The exporter will start on port `9100` by default
+4. Metrics are available at `http://localhost:9100/metrics`
 
 ### Sample Output
 
@@ -208,7 +208,7 @@ Add the following to your `prometheus.yml`:
 scrape_configs:
   - job_name: 'aruba-instant-on'
     static_configs:
-      - targets: ['localhost:9101']
+      - targets: ['localhost:9100']
     scrape_interval: 30s
     scrape_timeout: 10s
 ```
@@ -282,7 +282,7 @@ go test ./...
 ### Network Issues
 
 - Ensure outbound HTTPS access to `portal.instant-on.hpe.com`
-- Check firewall rules for the exporter's listening port (9101)
+- Check firewall rules for the exporter's listening port (9100)
 
 ### Debugging
 

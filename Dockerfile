@@ -1,5 +1,5 @@
 # Build stage
-FROM golang:1.21-alpine AS builder
+FROM golang:1.23-alpine AS builder
 
 # Install git and ca-certificates (needed for downloading dependencies)
 RUN apk add --no-cache git ca-certificates
@@ -28,7 +28,7 @@ WORKDIR /app
 COPY --from=builder /app/instanton-exporter .
 
 # Expose port
-EXPOSE 9101
+EXPOSE 9100
 
 # Run the binary
 ENTRYPOINT ["./instanton-exporter"]

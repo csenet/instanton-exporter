@@ -101,12 +101,12 @@ type WirelessClient struct {
 }
 
 type WiredClient struct {
-	ID           string `json:"id"`
-	Name         string `json:"name"`
-	MacAddress   string `json:"macAddress"`
-	ClientType   string `json:"clientType"`
-	IsVoiceDevice bool  `json:"isVoiceDevice"`
-	IPAddress    string `json:"ipAddress"`
+	ID            string `json:"id"`
+	Name          string `json:"name"`
+	MacAddress    string `json:"macAddress"`
+	ClientType    string `json:"clientType"`
+	IsVoiceDevice bool   `json:"isVoiceDevice"`
+	IPAddress     string `json:"ipAddress"`
 }
 
 type ClientSummaryResponse struct {
@@ -136,7 +136,6 @@ func (c *ArubaClient) GetSites() (*SitesResponse, error) {
 		return nil, fmt.Errorf("failed to read response: %w", err)
 	}
 
-
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("API returned status %d: %s", resp.StatusCode, string(body))
 	}
@@ -160,7 +159,6 @@ func (c *ArubaClient) GetInventory(siteID string) (*InventoryResponse, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to read response: %w", err)
 	}
-
 
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("API returned status %d: %s", resp.StatusCode, string(body))
@@ -189,7 +187,6 @@ func (c *ArubaClient) GetClientSummary(siteID string) (*ClientSummaryResponse, e
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("API returned status %d: %s", resp.StatusCode, string(body))
 	}
-
 
 	var clientResp ClientSummaryResponse
 	if err := json.Unmarshal(body, &clientResp); err != nil {
@@ -416,12 +413,12 @@ func (c *Collector) Collect() {
 		// Get wired clients for this site (temporarily disabled due to 404 error)
 		// TODO: Fix wired client endpoint
 		/*
-		wiredClients, err := c.client.GetWiredClientSummary(site.ID)
-		if err != nil {
-			log.Printf("Failed to get wired clients for site %s: %v", site.Name, err)
-		} else {
-			wiredClientsTotal.WithLabelValues(site.ID, site.Name).Set(float64(wiredClients.TotalCount))
-		}
+			wiredClients, err := c.client.GetWiredClientSummary(site.ID)
+			if err != nil {
+				log.Printf("Failed to get wired clients for site %s: %v", site.Name, err)
+			} else {
+				wiredClientsTotal.WithLabelValues(site.ID, site.Name).Set(float64(wiredClients.TotalCount))
+			}
 		*/
 		// Set wired clients to 0 for now
 		wiredClientsTotal.WithLabelValues(site.ID, site.Name).Set(0)
@@ -481,7 +478,7 @@ func main() {
 
 	http.Handle("/metrics", promhttp.HandlerFor(reg, promhttp.HandlerOpts{}))
 
-	port := ":9101"
+	port := ":9100"
 	log.Printf("Server listening on %s", port)
 	log.Fatal(http.ListenAndServe(port, nil))
 }
